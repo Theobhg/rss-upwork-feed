@@ -1,8 +1,16 @@
-import fastify from 'fastify';
+import Fastify from 'fastify';
+import cors from '@fastify/cors';
 
-const server = fastify();
+const fastify = Fastify();
+fastify.register(cors, {
+  origin: true,
+});
 
-server
+fastify.get('/', (req, reply) => {
+  reply.send([{ hello: 'world' }]);
+});
+
+fastify
   .listen({
     port: 3333,
   })
