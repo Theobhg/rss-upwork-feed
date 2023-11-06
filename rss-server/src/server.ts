@@ -1,30 +1,15 @@
-import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
+import Fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
-import { parse } from './rss-parser';
-import { articles } from './articleData';
 
-const fastify: FastifyInstance = Fastify({});
+import articles from './rss-parser';
+
+const fastify: FastifyInstance = Fastify();
 fastify.register(cors, {
   origin: true,
 });
 
-// const opts: RouteShorthandOptions = {
-//   schema: {
-//     response: {
-//       200: {
-//         type: 'object',
-//         properties: {
-//           articles: [''],
-//         },
-//       },
-//     },
-//   },
-// };
-
-parse;
-
 fastify.get('/', async (request, reply) => {
-  return reply.send(articles);
+  return reply.status(200).send(articles);
 });
 
 const startServer = async () => {
