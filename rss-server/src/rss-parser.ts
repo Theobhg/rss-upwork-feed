@@ -24,7 +24,7 @@ const parse = async (url: string) => {
 };
 
 setInterval(() => {
-  parse(netflixTechBlogUrl);
-}, 10000);
+  parse(upworkFeedUrl);
+}, 60000);
 
 export default articles;

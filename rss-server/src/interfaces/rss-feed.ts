@@ -16,12 +16,13 @@ export interface RSSFeedItem {
   title: string;
   link: string;
   pubDate: string;
-  'content:encoded': string;
+  content: string;
   guid: string;
   categories: string[];
   isoDate: string;
-  'content:encodedSnippet': string;
-  'dc:creator': string;
+  contentEncodedSnippet: string;
+  dcCreator: string;
+  contentSnippet: string;
 }
 
 interface RSSFeedImage {
