@@ -1,5 +1,7 @@
+import Feed from './components/Feed';
+
 function App() {
-  return <h1>RSS - UW</h1>;
+  return <Feed />;
 }
 
 export default App;
