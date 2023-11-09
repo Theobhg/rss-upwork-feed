@@ -1,24 +1,26 @@
-import Fastify, { FastifyInstance } from 'fastify';
-import cors from '@fastify/cors';
+import 'dotenv/config';
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
-import articles from './rss-parser';
+import { articles, parse } from './rss-parser';
 
-const fastify: FastifyInstance = Fastify();
-fastify.register(cors, {
-  origin: true,
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, { cors: { origin: '*' } });
+const port = process.env.PORT;
+
+app.use(cors({ origin: '*' }));
+
+app.get('/', (req: Request, res: Response) => {
+  res.send(articles);
 });
 
-fastify.get('/', async (request, reply) => {
-  return reply.status(200).send(articles);
-});
+setInterval(() => {
+  parse(process.env.UPWORK_RSS_URL as string);
 
-const startServer = async () => {
-  try {
-    await fastify.listen({ port: 3333 }).then(() => console.log('Server running...'));
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-};
+  io.emit('feed-update', articles);
+}, 10000);
 
-startServer();
+httpServer.listen(port, () => console.log(`Server running on port ${port}`));
