@@ -4,14 +4,14 @@ import { RSSFeedItem } from '../interfaces/rss-feed-item';
 import sliceSubstring from '../utils/sliceSubstring';
 
 const FeedItem = ({ article }: { article: RSSFeedItem }) => {
-   const { title, link, content, guid } = article;
+   const { title, link, content } = article;
 
    // Spliting the title into two parts to apply separate styling (green Upwork and black title)
    const upworkTitle = sliceSubstring(title, -'Upwork'.length);
    const normalTitle = sliceSubstring(title, 0, -'Upwork'.length);
 
    return (
-      <li key={guid} className="border border-gray-300 py-8 mb-8 rounded-lg shadow-sm">
+      <li className="border border-gray-300 py-8 mb-8 rounded-lg shadow-sm">
          <div className="md:container md:mx-auto mb-4">
             <h1 className="text-2xl font-bold mb-2">
                {normalTitle}
