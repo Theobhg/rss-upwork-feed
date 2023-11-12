@@ -12,10 +12,11 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
    return (
       <li key={guid} className="border border-gray-300 py-8 mb-8 rounded-lg shadow-sm">
          <div className="md:container md:mx-auto mb-4">
-            <span className="flex">
-               <h1 className="text-2xl font-bold mb-2">{normalTitle}</h1>
-               <h1 className="text-2xl font-bold mb-2 text-primary">&nbsp;{upworkTitle}</h1>
-            </span>
+            <h1>{title}</h1>
+            <h1 className="text-2xl font-bold mb-2">
+               {normalTitle}
+               <span className="text-2xl font-bold mb-2 text-primary">{upworkTitle}</span>
+            </h1>
             <div>{HTMLReactParser(content)}</div>
             <div>
                <a href={link} target="_blank">
