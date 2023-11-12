@@ -10,12 +10,7 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
    const normalTitle = title.slice(0, -'Upwork'.length);
 
    // Extrating anchor tag element from content
-   /* Solution 1: Simpler approach but if content contains other anchor tags, it will target the first one in ascending 
-   index order. Plus it assumes that the "click to apply" anchor element spans to the last index of the content */
-   // const contentAnchorElementIndexStart = content.indexOf('<a href=');
-   // const contentAnchorElement = content.slice(contentAnchorElementIndexStart);
-
-   /* Solution 2: Targets especifically the last portion of the ancor element including the title "click to apply" and 
+   /* Method 1: Targets especifically the last portion of the ancor element including the title "click to apply" and 
    works it's way back to the anchor's opening tag */
    const contentAnchorElementIndexEnd =
       content.indexOf('>click to apply</a>') + '>click to apply</a>'.length;
@@ -27,8 +22,12 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
       contentAnchorElementIndexStart,
       contentAnchorElementIndexEnd
    );
+   /* Method 2: Simpler approach but if content contains other anchor tags, it will target the first one in ascending 
+   index order. Plus it assumes that the "click to apply" anchor element spans to the last index of the content */
+   // const contentAnchorElementIndexStart = content.indexOf('<a href=');
+   // const contentAnchorElement = content.slice(contentAnchorElementIndexStart);
 
-   // Removing anchor element from content
+   // Removing extracted anchor element from content
    const updatetedContent = content.replace(contentAnchorElement, '');
 
    return (
@@ -39,8 +38,12 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
                <h1 className="text-2xl font-bold mb-2 text-primary">&nbsp;{upworkTitle}</h1>
             </span>
             <div>{HTMLReactParser(updatetedContent)}</div>
-            <div>
-               <a href={link} target="_blank">
+            <div className="mt-5">
+               <a
+                  href={link}
+                  target="_blank"
+                  className="hover:underline underline-offset-4 text-primary"
+               >
                   See Project
                </a>
             </div>
