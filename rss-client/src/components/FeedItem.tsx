@@ -2,6 +2,8 @@ import HTMLReactParser from 'html-react-parser';
 
 import { RSSFeedItem } from '../interfaces/rss-feed-item';
 
+import getHrefUrl from '../utils/getSubstringBetweenStartAndEnd';
+
 const FeedItem = ({ article }: { article: RSSFeedItem }) => {
    const { title, link, content, guid } = article;
 
@@ -12,22 +14,13 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
    // Extrating anchor tag element from content
    /* Method 1: Targets especifically the last portion of the ancor element including the title "click to apply" and 
    works it's way back to the anchor's opening tag */
-   const contentAnchorElementIndexEnd =
-      content.indexOf('>click to apply</a>') + '>click to apply</a>'.length;
-   const contentAnchorElementIndexStart = content.lastIndexOf(
-      '<a href=',
-      contentAnchorElementIndexEnd
-   );
-   const contentAnchorElement = content.slice(
-      contentAnchorElementIndexStart,
-      contentAnchorElementIndexEnd
-   );
+   const contentAnchorElement = getHrefUrl(content, '<a href=', '>click to apply</a>');
    /* Method 2: Simpler approach but if content contains other anchor tags, it will target the first one in ascending 
    index order. Plus it assumes that the "click to apply" anchor element spans to the last index of the content */
    // const contentAnchorElementIndexStart = content.indexOf('<a href=');
    // const contentAnchorElement = content.slice(contentAnchorElementIndexStart);
 
-   // Removing extracted anchor element from content
+   // Removing anchor element from content
    const updatetedContent = content.replace(contentAnchorElement, '');
 
    return (
