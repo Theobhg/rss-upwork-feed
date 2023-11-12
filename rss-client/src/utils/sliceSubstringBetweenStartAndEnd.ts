@@ -1,4 +1,4 @@
-const getSubstringBetweenStartAndEnd = (
+const sliceSubstringBetweenStartAndEnd = (
    string: string,
    substringStart: string,
    substringEnd: string
@@ -7,4 +7,4 @@ const getSubstringBetweenStartAndEnd = (
    const stringIndexStart = string.lastIndexOf(substringStart, stringIndexEnd);
    return string.slice(stringIndexStart, stringIndexEnd);
 };
-export default getSubstringBetweenStartAndEnd;
+export default sliceSubstringBetweenStartAndEnd;
