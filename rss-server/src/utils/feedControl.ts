@@ -28,7 +28,6 @@ const newFeedItems = (updatedFeedItems: RSSFeedItem[], previousFeedItems: RSSFee
          previousFeedItems.push(updtFeedItem);
       });
    }
-   return previousFeedItems;
 };
 
 export { getFeedItemsGuidsSet, isFeedItemsChanged, newFeedItems };
