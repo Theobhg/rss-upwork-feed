@@ -32,15 +32,15 @@ const Feed: FC = () => {
       };
    }, []);
 
-   return (
-      <div>
-         <ul className="p-16">
-            {articles.map(article => (
-               <FeedItem article={article} key={article.guid} />
-            ))}
-         </ul>
-      </div>
+   const renderArticles = (
+      <ul className="p-16">
+         {articles.map(article => (
+            <FeedItem article={article} key={article.guid} />
+         ))}
+      </ul>
    );
+
+   return <>{renderArticles}</>;
 };
 
 export default Feed;
