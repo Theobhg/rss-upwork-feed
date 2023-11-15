@@ -46,7 +46,7 @@ const FeedElapsedTime = ({ date }: RSSFeedItemProps) => {
 
       // Clear the interval when the component is unmounted
       return () => clearInterval(intervalId);
-   }, [pubDate]);
+   }, []);
 
    const renderTimeDifference = () => {
       if (timeDifference.years.value !== 0) {
