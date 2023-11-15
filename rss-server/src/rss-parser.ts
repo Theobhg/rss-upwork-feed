@@ -10,7 +10,7 @@ const parse = async (url: string) => {
    try {
       const feed = (await parser.parseURL(url)) as RSSFeed;
 
-      feed.items = newFeedItems(feed.items, articles);
+      newFeedItems(feed.items, articles);
    } catch (error) {
       console.error('Error parsing the RSS feed:', error);
    }

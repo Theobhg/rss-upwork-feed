@@ -3,9 +3,10 @@ import HTMLReactParser from 'html-react-parser';
 import { RSSFeedItem } from '../interfaces/rss-feed-item';
 import sliceSubstring from '../utils/sliceSubstring';
 import FeedNewTag from './FeedNewTag';
+import FeedElapsedTime from './FeedElapsedTime';
 
 const FeedItem = ({ article }: { article: RSSFeedItem }) => {
-   const { title, link, content, isNew } = article;
+   const { title, link, content, isNew, pubDate } = article;
 
    // Spliting the title into two parts to apply separate styling (green Upwork and black title)
    const normalTitle = sliceSubstring(title, 0, -'Upwork'.length);
@@ -23,6 +24,7 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
                </h1>
                <div className="w-fit">{isNew && <FeedNewTag />}</div>
             </div>
+            <div>{<FeedElapsedTime date={pubDate} />}</div>
 
             <div>{HTMLReactParser(content)}</div>
             <div>
