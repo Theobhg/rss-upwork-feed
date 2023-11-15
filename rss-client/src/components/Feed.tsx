@@ -5,6 +5,7 @@ import { io } from 'socket.io-client';
 import { RSSFeedItem } from '../interfaces/rss-feed-item';
 
 import FeedItem from './FeedItem';
+import FilterForm from './FilterForm';
 
 const Feed: FC = () => {
    const [articles, setArticles] = useState<RSSFeedItem[]>([]);
@@ -34,6 +35,8 @@ const Feed: FC = () => {
 
    return (
       <div>
+         <div className="sticky top-0 bg-slate-700 h-24 w-full">{/* <FilterForm  /> */}</div>
+
          <ul className="p-16">
             {articles.map(article => (
                <FeedItem article={article} key={article.guid} />
