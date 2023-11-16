@@ -4,7 +4,7 @@ export default {
    theme: {
       extend: {
          colors: {
-            primary: '#108A00', // Upwork Green
+            primary: '#14a800', // Upwork Green
          },
       },
    },
