@@ -2,17 +2,21 @@ import { useState, useEffect, FC } from 'react';
 import axios from 'axios';
 import htmlReactParse from 'html-react-parser';
 import { io } from 'socket.io-client';
-
 import { RSSFeedItem } from '../interfaces/rss-feed-item';
 import LoadSpinner from './LoadSpinner';
 
+// Accessing environment variables from the.env file with Vite's import.meta.env;
+const viteMetaEnv = import.meta.env;
+
 const Feed: FC = () => {
    const [articles, setArticles] = useState<RSSFeedItem[]>([]);
+
    const [isLoading, setIsLoading] = useState<boolean>(true);
 
    const getArticles: () => Promise<void> = async () => {
       try {
          const response = await axios.get('http://localhost:3333');
+
          setArticles(response.data);
       } catch (error) {
          console.log(error);
@@ -20,15 +24,19 @@ const Feed: FC = () => {
    };
 
    useEffect(() => {
-      const socket = io('http://localhost:3333');
+
+      const socket = io(viteMetaEnv.VITE_SERVER_URL);
+
       getArticles();
 
       socket.on('feed-update', (updatedItems: RSSFeedItem[]) => {
          setArticles(updatedItems);
 
+
          if (isLoading) {
             setIsLoading(false);
          }
+
       });
 
       return () => {
@@ -38,6 +46,7 @@ const Feed: FC = () => {
 
    return (
       <div>
+
          {isLoading ? (
             <LoadSpinner />
          ) : (
@@ -57,6 +66,7 @@ const Feed: FC = () => {
                ))}
             </ul>
          )}
+
       </div>
    );
 };
