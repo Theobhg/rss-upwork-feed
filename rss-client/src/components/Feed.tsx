@@ -3,17 +3,18 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 
 import { RSSFeedItem } from '../interfaces/rss-feed-item';
+import LoadSpinner from './LoadSpinner';
 
 import FeedItem from './FeedItem';
 import FilterForm from './FilterForm';
 
 const Feed: FC = () => {
    const [articles, setArticles] = useState<RSSFeedItem[]>([]);
+   const [isLoading, setIsLoading] = useState<boolean>(true);
 
    const getArticles: () => Promise<void> = async () => {
       try {
          const response = await axios.get('http://localhost:3333');
-
          setArticles(response.data);
       } catch (error) {
          console.log(error);
@@ -26,6 +27,10 @@ const Feed: FC = () => {
 
       socket.on('feed-update', (updatedItems: RSSFeedItem[]) => {
          setArticles(updatedItems);
+
+         if (isLoading) {
+            setIsLoading(false);
+         }
       });
 
       return () => {
@@ -36,12 +41,15 @@ const Feed: FC = () => {
    return (
       <div>
          <div className="sticky top-0 bg-slate-700 h-24 w-full">{/* <FilterForm  /> */}</div>
-
-         <ul className="p-16">
-            {articles.map(article => (
-               <FeedItem article={article} key={article.guid} />
-            ))}
-         </ul>
+         {isLoading ? (
+            <LoadSpinner />
+         ) : (
+            <ul className="p-16">
+               {articles.map(article => (
+                  <FeedItem article={article} key={article.guid} />
+               ))}
+            </ul>
+         )}
       </div>
    );
 };
