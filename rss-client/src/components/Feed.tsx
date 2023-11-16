@@ -48,11 +48,16 @@ const Feed: FC = () => {
          {isLoading ? (
             <LoadSpinner />
          ) : (
-            <ul className="p-16">
-               {articles.map(article => (
-                  <FeedItem article={article} key={article.guid} />
-               ))}
-            </ul>
+            <>
+               <div className="fixed top-0 bg-slate-300 h-36 w-full">
+                  {<FilterForm onClear={() => {}} onSubmit={() => {}} />}
+               </div>
+               <ul className="p-16">
+                  {articles.map(article => (
+                     <FeedItem article={article} key={article.guid} />
+                  ))}
+               </ul>
+            </>
          )}
       </div>
    );

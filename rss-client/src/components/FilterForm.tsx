@@ -6,14 +6,17 @@ interface IFormProps {
 }
 
 interface FormData {
-   wordSearch: string;
-   experienceLevel: [entry: boolean, intermediate: boolean, expert: boolean];
+   wordSearch: string; //&q={wordSearch}
+   // experienceLevel?: [entry: 1, intermediate: 2, expert: 3]; //&contractor_tier={experienceLevel}
 }
+
+// https://www.upwork.com/ab/feed/jobs/rss?q=shopify&sort=recency&paging=0%3B10
+// https://www.upwork.com/ab/feed/jobs/rss?q=shopify&sort=recency&contractor_tier=1&paging=0%3B10
 
 const FilterForm = ({ onSubmit, onClear }: IFormProps) => {
    const [formData, setFormData] = useState<FormData>({
       wordSearch: '',
-      experienceLevel: [false, false, false],
+      // experienceLevel: [false, false, false],
    });
 
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +31,22 @@ const FilterForm = ({ onSubmit, onClear }: IFormProps) => {
 
    const handleClear = () => {
       onClear();
-      setFormData({ wordSearch: '', experienceLevel: [false, false, false] });
+      setFormData({ wordSearch: '' });
    };
-   return <form action=""></form>;
+   return (
+      <form className="flex-1">
+         <label>
+            <input name="search-word" type="text" placeholder="search" />
+         </label>
+         <button
+            className="bg-primary py-3 px-8 text-white rounded-full shadow-md active:shadow-sm"
+            title="submit"
+            type="submit"
+         >
+            Search
+         </button>
+      </form>
+   );
 };
 
 export default FilterForm;
