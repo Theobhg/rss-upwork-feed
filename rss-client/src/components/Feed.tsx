@@ -15,7 +15,7 @@ const Feed: FC = () => {
 
    const getArticles: () => Promise<void> = async () => {
       try {
-         const response = await axios.get('http://localhost:3333');
+         const response = await axios.get(viteMetaEnv.VITE_SERVER_URL);
 
          setArticles(response.data);
       } catch (error) {
@@ -24,7 +24,6 @@ const Feed: FC = () => {
    };
 
    useEffect(() => {
-
       const socket = io(viteMetaEnv.VITE_SERVER_URL);
 
       getArticles();
@@ -32,11 +31,9 @@ const Feed: FC = () => {
       socket.on('feed-update', (updatedItems: RSSFeedItem[]) => {
          setArticles(updatedItems);
 
-
          if (isLoading) {
             setIsLoading(false);
          }
-
       });
 
       return () => {
@@ -46,7 +43,6 @@ const Feed: FC = () => {
 
    return (
       <div>
-
          {isLoading ? (
             <LoadSpinner />
          ) : (
@@ -66,7 +62,6 @@ const Feed: FC = () => {
                ))}
             </ul>
          )}
-
       </div>
    );
 };
