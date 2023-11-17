@@ -1,10 +1,10 @@
 import HTMLReactParser from 'html-react-parser';
 
-import { RSSFeedItem } from '../interfaces/rss-feed-item';
+import { IFeedItem } from '../interfaces/feed-item';
 
 import sliceSubstringBetweenStartAndEnd from '../utils/sliceSubstringBetweenStartAndEnd';
 
-const FeedItem = ({ article }: { article: RSSFeedItem }) => {
+const FeedItem = ({ article }: { article: IFeedItem }) => {
    const { title, link, content, guid } = article;
 
    // Spliting the title into two parts to apply separate styling (green Upwork and black title)
