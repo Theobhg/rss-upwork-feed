@@ -14,13 +14,13 @@ const port = process.env.PORT;
 app.use(cors({ origin: '*' }));
 
 app.get('/', (req: Request, res: Response) => {
-  res.send(articles);
+   res.send(articles);
 });
 
-setInterval(() => {
-  parse(process.env.UPWORK_RSS_URL as string);
+setInterval(async () => {
+   await parse(process.env.UPWORK_RSS_URL as string);
 
-  io.emit('feed-update', articles);
+   io.emit('feed-update', articles);
 }, 10000);
 
 httpServer.listen(port, () => console.log(`Server running on port ${port}`));
