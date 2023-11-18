@@ -1,33 +1,39 @@
 import { RSSFeedItem } from '../interfaces/rss-feed';
 
-const getFeedItemsGuidsSet = (feedItems: RSSFeedItem[]) => {
+const getFeedItemsGuidSet = (feedItems: RSSFeedItem[]): Set<string> => {
    return new Set<string>(feedItems.map(feedItem => feedItem.guid));
 };
 
 const isFeedItemsChanged = (
    updatedFeedItems: RSSFeedItem[],
    previousFeedItemsGuidsSet: Set<string>
-) => {
-   return updatedFeedItems.some(updtFeedItem => !previousFeedItemsGuidsSet.has(updtFeedItem.guid));
+): boolean => {
+   return updatedFeedItems.some(
+      updatedFeedItem => !previousFeedItemsGuidsSet.has(updatedFeedItem.guid)
+   );
 };
 
-const newFeedItems = (updatedFeedItems: RSSFeedItem[], previousFeedItems: RSSFeedItem[]) => {
-   const previousFeedItemsGuidsSet = getFeedItemsGuidsSet(previousFeedItems);
+const isFeedItemNew = (
+   updatedFeedItem: RSSFeedItem,
+   previousFeedItemsGuidsSet: Set<string>
+): boolean => {
+   return !previousFeedItemsGuidsSet.has(updatedFeedItem.guid);
+};
+
+const getNewFeedItems = (updatedFeedItems: RSSFeedItem[], previousFeedItems: RSSFeedItem[]) => {
+   const previousFeedItemsGuidsSet = getFeedItemsGuidSet(previousFeedItems);
 
    if (isFeedItemsChanged(updatedFeedItems, previousFeedItemsGuidsSet)) {
-      updatedFeedItems.forEach(updtFeedItem => {
-         if (!previousFeedItemsGuidsSet.has(updtFeedItem.guid)) {
-            updtFeedItem.isNew = true;
+      updatedFeedItems.forEach(updatedFeedItem => {
+         if (isFeedItemNew(updatedFeedItem, previousFeedItemsGuidsSet)) {
+            updatedFeedItem.isNew = true;
          } else {
-            updtFeedItem.isNew = false;
+            updatedFeedItem.isNew = false;
          }
       });
-
-      previousFeedItems.length = 0;
-      updatedFeedItems.forEach(updtFeedItem => {
-         previousFeedItems.push(updtFeedItem);
-      });
+      return updatedFeedItems;
    }
+   return [];
 };
 
-export { getFeedItemsGuidsSet, isFeedItemsChanged, newFeedItems };
+export default getNewFeedItems;
