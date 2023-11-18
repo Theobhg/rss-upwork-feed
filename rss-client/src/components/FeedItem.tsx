@@ -24,7 +24,7 @@ const FeedItem = ({ article }: { article: RSSFeedItem }) => {
                </h1>
                <div className="w-fit">{isNew && <FeedNewTag />}</div>
             </div>
-            <div>{<FeedElapsedTime date={pubDate} />}</div>
+            <div className="mb-5">{<FeedElapsedTime date={pubDate} />}</div>
 
             <div>{HTMLReactParser(content)}</div>
             <div>
